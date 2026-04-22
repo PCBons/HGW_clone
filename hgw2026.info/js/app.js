@@ -891,13 +891,13 @@ function renderOnboarding(root) {
   document.body.classList.add("onboarding-active");
 
   if (!document.getElementById("rickroll-player")) {
-    const frame = document.createElement("iframe");
-    frame.id = "rickroll-player";
-    frame.src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ&controls=0";
-    frame.allow = "autoplay";
-    frame.title = "background music";
-    frame.style.cssText = "position:fixed;width:1px;height:1px;top:-9999px;left:-9999px;border:none;";
-    document.body.appendChild(frame);
+    const audio = document.createElement("audio");
+    audio.id = "rickroll-player";
+    audio.src = "img/never_give_up.MP3";
+    audio.loop = true;
+    audio.autoplay = true;
+    document.body.appendChild(audio);
+    audio.play().catch(() => {});
   }
   root.innerHTML = `
     <section class="onboarding" id="onboarding" data-theme="paper">
