@@ -466,6 +466,7 @@ function renderHackTerminal(root, onDone) {
     { text: "> BisBis videos delen op LinkedIn Trup",          ms: 18, pause: 400, cls: "ok" },
     { text: "> WELKOM, ONBEVOEGDE GEBRUIKER.",               ms: 28, pause: 550 },
     { text: "> KLAAR OM TE BEGINNEN.",                       ms: 30, pause: 200, cls: "bright" },
+    { text: "> !! ZET JE GELUID AAN !!",                    ms: 30, pause: 300, cls: "bright" },
   ];
 
   startBtn.style.visibility = "hidden";
