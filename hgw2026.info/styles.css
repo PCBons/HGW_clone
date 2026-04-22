@@ -2691,6 +2691,149 @@ body.auth-mode {
 }
 
 /* ==========================================================================
+   Hack-terminal START screen
+   ========================================================================== */
+
+.start-screen.hack-terminal {
+  background: #060b06;
+  box-shadow: inset 0 0 0 2px #00ff41;
+  padding: 1.5rem 1rem;
+  justify-content: center;
+}
+
+.terminal-window {
+  width: min(100%, 620px);
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #00c832;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow:
+    0 0 28px rgba(0, 255, 65, 0.22),
+    0 0 70px rgba(0, 255, 65, 0.07);
+}
+
+.terminal-bar {
+  background: #111f11;
+  border-bottom: 1px solid #00c832;
+  padding: 0.45rem 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.terminal-traffic {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.terminal-traffic span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.terminal-traffic span:nth-child(1) { background: #ff5f57; }
+.terminal-traffic span:nth-child(2) { background: #febc2e; }
+.terminal-traffic span:nth-child(3) { background: #28c840; }
+
+.terminal-bar-title {
+  font-family: "VT323", monospace;
+  font-size: 0.9rem;
+  color: #00c832;
+  letter-spacing: 2px;
+  opacity: 0.75;
+  flex: 1;
+  text-align: center;
+}
+
+.terminal-body {
+  background: #040804;
+  padding: 1rem 1.25rem 0.5rem;
+  overflow-y: auto;
+  min-height: 180px;
+  max-height: 52vh;
+}
+
+.terminal-line {
+  font-family: "VT323", monospace;
+  font-size: clamp(1rem, 3.8vw, 1.25rem);
+  color: #7db87d;
+  line-height: 1.65;
+  white-space: pre;
+}
+
+.terminal-line.tl-ok {
+  color: #00ff41;
+}
+
+.terminal-line.tl-bright {
+  color: #e8ffe8;
+  text-shadow: 0 0 7px rgba(0, 255, 65, 0.7);
+}
+
+.terminal-input-line {
+  background: #040804;
+  border-top: 1px solid #0d200d;
+  padding: 0.55rem 1.25rem 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.terminal-prompt {
+  font-family: "VT323", monospace;
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
+  color: #00ff41;
+  flex-shrink: 0;
+}
+
+.terminal-start-btn {
+  font-family: "VT323", monospace;
+  font-size: clamp(1.2rem, 4.2vw, 1.5rem);
+  color: #00ff41;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.7);
+  transition: color 0.15s, text-shadow 0.15s;
+}
+
+.terminal-start-btn:hover:not(:disabled) {
+  color: #fff;
+  text-shadow: 0 0 14px rgba(0, 255, 65, 1);
+}
+
+.terminal-start-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.terminal-start-btn.terminal-start-ready {
+  animation: terminal-btn-pulse 0.9s ease-in-out infinite;
+}
+
+.terminal-cursor {
+  font-family: "VT323", monospace;
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
+  color: #00ff41;
+  animation: terminal-blink 0.8s step-end infinite;
+  margin-left: 1px;
+}
+
+@keyframes terminal-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes terminal-btn-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+/* ==========================================================================
    Flashback-carousel (voorafgaand aan GPS)
    ========================================================================== */
 

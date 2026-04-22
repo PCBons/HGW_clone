@@ -382,19 +382,16 @@ let sessionStarted = false;
 export function mountHome(root) {
   if (!root) return;
   const hash = (location.hash || "").toLowerCase();
-  // Alleen #reveal forceert de onthulling opnieuw. ?preview bypasst
-  // alleen de teaser/auth — als de user al door de onboarding heen is
-  // moet terug-navigatie netjes in het tegel-menu landen, niet in de
-  // onthulling.
   const forceReveal = hash === "#reveal";
+  const isPreview = location.search.includes("preview");
 
   if (!isRevealed()) {
     renderTeaser(root);
     return;
   }
-  if (forceReveal || !isOnboarded()) {
+  if (forceReveal || !isOnboarded() || isPreview) {
     if (!sessionStarted) {
-      renderStartScreen(root, () => {
+      renderHackTerminal(root, () => {
         sessionStarted = true;
         renderOnboarding(root);
       });
@@ -406,9 +403,6 @@ export function mountHome(root) {
   renderAppHome(root);
 }
 
-// Arcade-style START-scherm. Dubbele functie: (1) unlockt de AudioContext
-// zodra user klikt, (2) zet de sfeer voor wat er gaat komen. Retro coin-op
-// vibes met pulserende knop, scanlines en een leukere call-to-action.
 function renderStartScreen(root, onStart) {
   document.body.classList.add("onboarding-active");
   root.innerHTML = `
@@ -428,17 +422,84 @@ function renderStartScreen(root, onStart) {
     </section>
   `;
   const btn = root.querySelector("#start-btn");
-  btn?.addEventListener(
-    "click",
-    () => {
-      sfx.unlock();
-      sfx.ping();
-      btn.classList.add("pressed");
-      // Korte "inserted"-animatie voor we naar de slideshow gaan
-      setTimeout(() => onStart(), 320);
-    },
-    { once: true },
-  );
+  btn?.addEventListener("click", () => {
+    sfx.unlock();
+    sfx.ping();
+    btn.classList.add("pressed");
+    setTimeout(() => onStart(), 320);
+  }, { once: true });
+}
+
+function renderHackTerminal(root, onDone) {
+  document.body.classList.add("onboarding-active");
+  root.innerHTML = `
+    <section class="start-screen hack-terminal">
+      <div class="start-scanlines" aria-hidden="true"></div>
+      <div class="terminal-window">
+        <div class="terminal-bar" aria-hidden="true">
+          <span class="terminal-traffic"><span></span><span></span><span></span></span>
+          <span class="terminal-bar-title">TERMINAL v2.6 // ONBEVOEGDE TOEGANG</span>
+        </div>
+        <div class="terminal-body" id="terminal-body"></div>
+        <div class="terminal-input-line">
+          <span class="terminal-prompt" aria-hidden="true">&gt;&nbsp;</span>
+          <button class="terminal-start-btn" id="terminal-start-btn" type="button">klik hier om te starten</button>
+          <span class="terminal-cursor" id="terminal-cursor" aria-hidden="true">█</span>
+        </div>
+      </div>
+    </section>
+  `;
+
+  const bodyEl = document.getElementById("terminal-body");
+  const startBtn = document.getElementById("terminal-start-btn");
+  const cursorEl = document.getElementById("terminal-cursor");
+
+  const LINES = [
+    { text: "> VERBINDING MET hgw2026.info...",              ms: 25, pause: 200 },
+    { text: "  STATUS: VERBONDEN                   [OK]",    ms: 18, pause: 350, cls: "ok" },
+    { text: "> BEVEILIGINGSLAAG GEDETECTEERD",               ms: 22, pause: 250 },
+    { text: "> AUTH-GATE OMZEILEN...",                       ms: 30, pause: 100 },
+    { text: "  [████████████████████] 100%         [GESLAAGD]", ms: 11, pause: 450, cls: "ok" },
+    { text: "> GEHEIME ONTHULLINGSDATA GELADEN",             ms: 22, pause: 300 },
+    { text: "> kopieren bankgegevens Kool",                  ms: 22, pause: 250, cls: "ok" },
+    { text: "> lekken browser history Boot",                 ms: 22, pause: 250, cls: "ok" },
+    { text: "> BisBis videos delen met School for Moral ambition", ms: 18, pause: 400, cls: "ok" },
+    { text: "> WELKOM, ONBEVOEGDE GEBRUIKER.",               ms: 28, pause: 550 },
+    { text: "> KLAAR OM TE BEGINNEN.",                       ms: 30, pause: 200, cls: "bright" },
+  ];
+
+  startBtn.style.visibility = "hidden";
+
+  let totalDelay = 500;
+  LINES.forEach(({ text, ms, pause, cls }) => {
+    const startAt = totalDelay;
+    totalDelay += text.length * ms + pause;
+    setTimeout(() => {
+      const line = document.createElement("div");
+      line.className = "terminal-line" + (cls ? ` tl-${cls}` : "");
+      bodyEl.appendChild(line);
+      let i = 0;
+      const id = setInterval(() => {
+        line.textContent = text.slice(0, ++i);
+        bodyEl.scrollTop = bodyEl.scrollHeight;
+        if (i >= text.length) clearInterval(id);
+      }, ms);
+    }, startAt);
+  });
+
+  setTimeout(() => {
+    cursorEl.style.display = "none";
+    startBtn.style.visibility = "visible";
+    startBtn.classList.add("terminal-start-ready");
+  }, totalDelay + 200);
+
+  startBtn.addEventListener("click", () => {
+    sfx.unlock();
+    sfx.ping();
+    startBtn.textContent = "LADEN...";
+    startBtn.disabled = true;
+    setTimeout(() => onDone(), 300);
+  }, { once: true });
 }
 
 // ---------------------------------------------------------------------------
