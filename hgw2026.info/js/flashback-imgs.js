@@ -6,7 +6,7 @@
 export const GIF_FILE = "5A4E9120-6113-4F88-89F6-91A49B3CB5BB.GIF";
 
 export const FLASHBACK_IMGS = [
-  "IMG_0718.JPG",
+  "Naamloos.jpg",
   "IMG_0719.JPG",
   "IMG_0720.JPG",
   "0f45905d-95a5-4988-9f6d-f86f8b6e7150.JPG",

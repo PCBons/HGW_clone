@@ -889,6 +889,16 @@ const SLIDES = [
 
 function renderOnboarding(root) {
   document.body.classList.add("onboarding-active");
+
+  if (!document.getElementById("rickroll-player")) {
+    const frame = document.createElement("iframe");
+    frame.id = "rickroll-player";
+    frame.src = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ&controls=0";
+    frame.allow = "autoplay";
+    frame.title = "background music";
+    frame.style.cssText = "position:fixed;width:1px;height:1px;top:-9999px;left:-9999px;border:none;";
+    document.body.appendChild(frame);
+  }
   root.innerHTML = `
     <section class="onboarding" id="onboarding" data-theme="paper">
       <div class="progress-bar" aria-hidden="true"><span id="progress"></span></div>
@@ -923,7 +933,7 @@ function renderOnboarding(root) {
     nextBtn.textContent = !open
       ? (SLIDES[idx].key === "reveal" ? "Krassen…" : "Wacht…")
       : last
-        ? "Naar app →"
+        ? "Opnieuw ›"
         : "Verder ›";
   }
 
@@ -1063,7 +1073,8 @@ function renderOnboarding(root) {
     if (delta > 0 && !forwardGate) return;
     const next = Math.min(SLIDES.length - 1, Math.max(0, idx + delta));
     if (next === idx && delta > 0) {
-      finish();
+      idx = 0;
+      renderSlide(0, 1);
       return;
     }
     const direction = next > idx ? 1 : -1;
@@ -1082,10 +1093,7 @@ function renderOnboarding(root) {
   }
 
   prevBtn.addEventListener("click", () => go(-1));
-  nextBtn.addEventListener("click", () => {
-    if (idx === SLIDES.length - 1) finish();
-    else go(1);
-  });
+  nextBtn.addEventListener("click", () => go(1));
   dotsEl.addEventListener("click", (e) => {
     const n = e.target?.dataset?.n;
     if (n != null) {
