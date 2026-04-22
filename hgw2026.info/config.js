@@ -29,7 +29,7 @@ export const AUTH = {
   // Gedeelde code voor de hele groep. Leeg laten = geen auth-gate.
   // Dit is 'soft' privacy: de check draait client-side en is te
   // omzeilen via DevTools, maar houdt toevallige bezoekers buiten.
-  sharedCode: "puurgenieten",
+  sharedCode: "",
 };
 
 // Supabase
