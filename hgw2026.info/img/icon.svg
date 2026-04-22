@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="HGW '26">
+  <!-- Papier-achtige donkere achtergrond met rounded corners voor iOS-app-icon look -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a2416"/>
+      <stop offset="1" stop-color="#1a0f08"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background + subtiele korrel via noise-achtige puntjes -->
+  <rect width="512" height="512" fill="url(#bg)"/>
+
+  <!-- Dubbele mustard stempel-rand zoals de start-screen -->
+  <rect x="32" y="32" width="448" height="448" rx="48" ry="48"
+        fill="none" stroke="#e4a72c" stroke-width="4" opacity="0.85"/>
+  <rect x="48" y="48" width="416" height="416" rx="36" ry="36"
+        fill="none" stroke="#e4a72c" stroke-width="2" opacity="0.45"/>
+
+  <!-- Hoeksterren, klein en retro -->
+  <g fill="#e4a72c" opacity="0.8" font-family="monospace" font-size="34" font-weight="700">
+    <text x="80" y="108" text-anchor="middle">★</text>
+    <text x="432" y="108" text-anchor="middle">★</text>
+    <text x="80" y="436" text-anchor="middle">★</text>
+    <text x="432" y="436" text-anchor="middle">★</text>
+  </g>
+
+  <!-- "HGW" met accent-rode kleur + mustard-slagschaduw voor retro-neon-gevoel -->
+  <g font-family="'Courier New', 'VT323', monospace" font-weight="700" text-anchor="middle"
+     letter-spacing="8">
+    <!-- Slagschaduw (mustard, iets verplaatst) -->
+    <text x="264" y="282" font-size="190" fill="#e4a72c">HGW</text>
+    <!-- Hoofdtekst met glow -->
+    <text x="256" y="276" font-size="190" fill="#c0392b" filter="url(#glow)">HGW</text>
+  </g>
+
+  <!-- Jaar-accent: '26 in mustard-geel onder het hoofdlogo -->
+  <g font-family="'Courier New', 'VT323', monospace" font-weight="700" text-anchor="middle"
+     letter-spacing="4">
+    <text x="258" y="386" font-size="78" fill="#2b1810">'26</text>
+    <text x="256" y="384" font-size="78" fill="#e4a72c">'26</text>
+  </g>
+
+  <!-- Kleine "MMXXVI" onderaan als editie-stempel -->
+  <text x="256" y="446" text-anchor="middle" font-family="'Courier New', monospace"
+        font-size="24" fill="#e4a72c" letter-spacing="6" opacity="0.7">★ MMXXVI ★</text>
+</svg>
