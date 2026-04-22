@@ -463,7 +463,7 @@ function renderHackTerminal(root, onDone) {
     { text: "> GEHEIME ONTHULLINGSDATA GELADEN",             ms: 22, pause: 300 },
     { text: "> kopieren bankgegevens Kool",                  ms: 22, pause: 250, cls: "ok" },
     { text: "> lekken browser history Boot",                 ms: 22, pause: 250, cls: "ok" },
-    { text: "> BisBis videos delen met School for Moral ambition", ms: 18, pause: 400, cls: "ok" },
+    { text: "> BisBis videos delen op LinkedIn Trup",          ms: 18, pause: 400, cls: "ok" },
     { text: "> WELKOM, ONBEVOEGDE GEBRUIKER.",               ms: 28, pause: 550 },
     { text: "> KLAAR OM TE BEGINNEN.",                       ms: 30, pause: 200, cls: "bright" },
   ];
